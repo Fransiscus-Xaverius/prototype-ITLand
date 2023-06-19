@@ -27,6 +27,10 @@
       background-color: red;
     }
 
+    .enemy{
+      background-color: black;
+    }
+
     #terminal-container {
       height: 400px;
     }
@@ -38,7 +42,12 @@
   <script src="main.js"></script>
 </head>
 <body onload="onload()" style="display: block; align-items: center;">
-  <div class="grid" id="grid-container" style="align-items: center;"></div>
+  <div class="container" id="container" style="display: flex; align-items:center; width: 100%; height: 60%;" >
+    <div class="grid" id="grid-container" style="align-items: center;"></div>
+    <div class="inventory" style="width: 30%; height: 100%;">
+      <h1>Score : </h1>
+    </div>
+  </div>
   <div id="terminal"></div>
 </body>
 </html>
