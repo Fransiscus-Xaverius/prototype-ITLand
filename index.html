@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(32, 40px);
+      grid-template-rows: repeat(13, 40px);
+      grid-gap: 2px;
+    }
+    
+    .cell {
+      border: 1px solid black;
+      width: 40px;
+      height: 40px;
+    }
+
+    .dot {
+      background-color: red;
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="main.js"></script>
+</head>
+<body onload="onload()">
+  <div class="grid" id="grid-container"></div>
+</body>
+</html>
