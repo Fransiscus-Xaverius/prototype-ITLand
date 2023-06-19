@@ -1,8 +1,41 @@
 let posX = 0;
-let posY = 7;
+let posY = 6;
+var term = new Terminal();
 
 function onload(){
     var gridContainer = document.getElementById("grid-container");
+    
+    redraw(posX,posY);
+
+    term.open(document.getElementById('terminal'));
+    //term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ ')
+
+    var currLine = "";
+    var entries = [];
+    term.onKey((ev) => {
+      if (ev.domEvent.key == "Enter") {
+        if (currLine) {
+            entries.push(currLine);
+            term.write("\r\n");
+            //Send cmd to backend here!
+            handleCommand(currLine);
+            currLine = ""
+        }
+    } else if (ev.domEvent.key == "Backspace") {
+        if (currLine) {
+            currLine = currLine.slice(0, currLine.length - 1);
+            term.write("\b \b");
+        }
+    } else {
+        currLine += ev.key
+        term.write(ev.key);
+    }
+  });
+
+}
+
+function redraw(x,y){
+  var gridContainer = document.getElementById("grid-container");
     
     for (var row = 0; row < 13; row++) {
       for (var col = 0; col < 32; col++) {
@@ -10,12 +43,42 @@ function onload(){
         cell.className = "cell";
         
         // Add dot to [0, 7] grid cell
-        if (row === 6 && col === 0) {
+        if (row === y && col === x) {
           cell.classList.add("dot");
         }
         
         gridContainer.appendChild(cell);
       }
     }
+}
+
+function handleCommand(command) {
+  // Split the command into its parts
+  const parts = command.trim().split(' ');
+  const cmd = parts[0];
+  const args = parts.slice(1);
+
+  // Perform different actions based on the command
+  switch (cmd) {
+    case 'help':
+      term.writeln('Available commands:');
+      term.writeln('- help: Display available commands');
+      term.writeln('- echo [text]: Echo the provided text');
+      term.writeln('- clear: Clear the terminal');
+      break;
+    case 'echo':
+      const text = args.join(' ');
+      term.writeln('Echo: ' + text);
+      break;
+    case 'clear':
+      term.clear();
+      break;
+    case 'moveUp()':
+      posY--;
+      redraw(posX,posY)
+    default:
+      term.writeln('Unknown command! ' + cmd);
+      break;
+  }
 }
 

@@ -26,11 +26,19 @@
     .dot {
       background-color: red;
     }
+
+    #terminal-container {
+      height: 400px;
+    }
+
   </style>
+  <link rel="stylesheet" href="node_modules/xterm/css/xterm.css" />
+  <script src="node_modules/xterm/lib/xterm.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="main.js"></script>
 </head>
-<body onload="onload()">
-  <div class="grid" id="grid-container"></div>
+<body onload="onload()" style="display: block; align-items: center;">
+  <div class="grid" id="grid-container" style="align-items: center;"></div>
+  <div id="terminal"></div>
 </body>
 </html>
