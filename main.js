@@ -1,8 +1,10 @@
 let posX = 0;
 let posY = 6;
 var term = new Terminal();
+var Grid = [];
 
 function onload(){
+  alert("reload");
     var gridContainer = document.getElementById("grid-container");
     
     redraw(posX,posY);
@@ -41,12 +43,11 @@ function redraw(x,y){
       for (var col = 0; col < 32; col++) {
         var cell = document.createElement("div");
         cell.className = "cell";
-        
         // Add dot to [0, 7] grid cell
-        if (row === y && col === x) {
+        if (row === posY && col === posX) {
           cell.classList.add("dot");
         }
-        
+        Grid[col,row] = cell;
         gridContainer.appendChild(cell);
       }
     }
@@ -74,8 +75,12 @@ function handleCommand(command) {
       term.clear();
       break;
     case 'moveUp()':
+      var old = $(Grid[posX,posY]);
+      old.removeClass("dot");
       posY--;
-      redraw(posX,posY)
+      var newTile = $(Grid[posX,posY]);
+      newTile.addClass("dot");
+      break;
     default:
       term.writeln('Unknown command! ' + cmd);
       break;
