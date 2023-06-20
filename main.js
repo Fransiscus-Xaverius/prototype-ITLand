@@ -3,6 +3,7 @@ let posY = 6;
 var term = new Terminal();
 var Grid = [];
 let win;
+var timer = 0;
 var gridContainer = document.getElementById("grid-container");
 function onload(){
     
@@ -31,6 +32,8 @@ function onload(){
         currLine += ev.key
         term.write(ev.key);
     }
+
+    setInterval(redraw, 100);    
   });
 
 }
@@ -38,6 +41,18 @@ function onload(){
 //needs to be implemented for each move.
 function save(){
   
+}
+
+var PI = 1;
+function animatePlayer(){
+  $('#grid'+posX+posY).prepend($('<img>',{id:'playermodel',src:`../prototype-ITLand/src/assets/player_idle/${PI}.png`, class:'cell-content'}));
+  console.log("animated");
+  PI++;
+  if(PI>6) PI = 1;
+}
+
+function animateEnemy(){
+  $('.grid enemy').prepend();
 }
 
 //redraw function
@@ -68,6 +83,7 @@ function redraw(x,y){
     }
   }  
   else{
+    $('.grid').empty();
     for (var row = 0; row < 13; row++) {
       temp = Grid[row];
       for (var col = 0; col < 32; col++) {
@@ -84,12 +100,17 @@ function redraw(x,y){
       }
     }
   }
+  $('#score').text('Score :'+timer+"s");
+  console.log(timer);
+  timer++;
+  animatePlayer();
   console.log(JSON.stringify(Grid))  
 }
 
 //enemy encounter function
 function encounter(newX, newY){
   var next = $("#grid"+newX+newY);
+  alert(`${newX}, ${newY}`);
   if(next.hasClass("enemy")) return true;
   return false;
 }
@@ -138,7 +159,7 @@ function moveDown(){
 }
 
 function moveRight(){
-  var fight = encounter((posX-1),posY);
+  var fight = encounter((posX+1),posY);
   win = false;
   if(fight){
     battle();
@@ -156,7 +177,7 @@ function moveRight(){
 }
 
 function moveLeft(){
-  var fight = encounter((posX+1),posY);
+  var fight = encounter((posX-1),posY);
   win = false;
   if(fight){
     battle();
