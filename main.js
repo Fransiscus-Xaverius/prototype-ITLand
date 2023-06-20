@@ -2,6 +2,7 @@ let posX = 0;
 let posY = 6;
 var term = new Terminal();
 var Grid = [];
+let win;
 var gridContainer = document.getElementById("grid-container");
 function onload(){
     
@@ -9,7 +10,7 @@ function onload(){
 
     term.open(document.getElementById('terminal'));
     //term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ ')
-
+    term.focus();
     var currLine = "";
     var entries = [];
     term.onKey((ev) => {
@@ -102,11 +103,14 @@ function battle(){
 
 function moveUp(){
   var fight = encounter(posX,(posY-1));
-  var win = false;
+  win = false;
   if(fight){
     battle();
   }
   else{
+    win = true;
+  }
+  if(win){
     var old = $("#grid"+posX+posY);
     old.removeClass("dot");
     posY--;
@@ -115,6 +119,60 @@ function moveUp(){
   }
 }
 
+function moveDown(){
+  var fight = encounter(posX,(posY+1));
+  win = false;
+  if(fight){
+    battle();
+  }
+  else{
+    win = true;
+  }
+  if(win){
+    var old = $("#grid"+posX+posY);
+    old.removeClass("dot");
+    posY++;
+    var newTile = $("#grid"+posX+posY);
+    newTile.addClass("dot");
+  }
+}
+
+function moveRight(){
+  var fight = encounter((posX-1),posY);
+  win = false;
+  if(fight){
+    battle();
+  }
+  else{
+    win = true;
+  }
+  if(win){
+    var old = $("#grid"+posX+posY);
+    old.removeClass("dot");
+    posX++;
+    var newTile = $("#grid"+posX+posY);
+    newTile.addClass("dot");
+  }
+}
+
+function moveLeft(){
+  var fight = encounter((posX+1),posY);
+  win = false;
+  if(fight){
+    battle();
+  }else{
+    win = true;
+  }
+  if(win){
+    var old = $("#grid"+posX+posY);
+    old.removeClass("dot");
+    posX--;
+    var newTile = $("#grid"+posX+posY);
+    newTile.addClass("dot");
+  }
+}
+
+//command handler function
 function handleCommand(command) {
   // Split the command into its parts
   const parts = command.trim().split(' ');
@@ -141,25 +199,13 @@ function handleCommand(command) {
       console.log(JSON.stringify(Grid));
       break;
     case 'moveDown()':
-      var old = $("#grid"+posX+posY);
-      old.removeClass("dot");
-      posY++;
-      var newTile = $("#grid"+posX+posY);
-      newTile.addClass("dot");
+      moveDown();
       break;
     case 'moveLeft()':
-      var old = $("#grid"+posX+posY);
-      old.removeClass("dot");
-      posX--;
-      var newTile = $("#grid"+posX+posY);
-      newTile.addClass("dot");
+      moveLeft();
       break;
     case 'moveRight()':
-      var old = $("#grid"+posX+posY);
-      old.removeClass("dot");
-      posX++;
-      var newTile = $("#grid"+posX+posY);
-      newTile.addClass("dot");
+      moveRight();
       break;
     case 't':
       redraw();
