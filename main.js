@@ -33,7 +33,7 @@ function onload(){
         term.write(ev.key);
     }
 
-    setInterval(redraw, 100);    
+    setInterval(redraw, 1000);    
   });
 
 }
@@ -59,9 +59,9 @@ function animateEnemy(){
 function redraw(x,y){
   var gridContainer = document.getElementById("grid-container");
   if(Grid.length===0){
-    for (var row = 0; row < 13; row++) {
+    for (var row = 0; row < 26; row++) {
       temp = [];
-      for (var col = 0; col < 32; col++) {
+      for (var col = 0; col < 64; col++) {
         var cell = document.createElement("div");
         cell.className = "cell";
         cell.setAttribute("id", "grid"+col+row);
@@ -84,9 +84,9 @@ function redraw(x,y){
   }  
   else{
     $('.grid').empty();
-    for (var row = 0; row < 13; row++) {
+    for (var row = 0; row < 26; row++) {
       temp = Grid[row];
-      for (var col = 0; col < 32; col++) {
+      for (var col = 0; col < 64; col++) {
         var cell = document.createElement("div");
         cell.className = "cell";
         cell.setAttribute("id", "grid"+col+row);
@@ -105,6 +105,10 @@ function redraw(x,y){
   timer++;
   animatePlayer();
   console.log(JSON.stringify(Grid))  
+}
+
+function updatePlayer(){
+  
 }
 
 //enemy encounter function
