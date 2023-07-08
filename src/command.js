@@ -1,5 +1,7 @@
-import * as movement from "./game/movement.js";
-import * as animation from "./animation.js";
+//COMMAND HANDLER FOR XTERM TERMINAL
+
+import {term} from "../main.js";
+import * as movement from "./movement.js";
 
 export function handleCommand(command) {
     // Split the command into its parts

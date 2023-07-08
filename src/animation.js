@@ -1,8 +1,16 @@
+var Grid = [];
+var timer = 0;
 
+let win;
+
+import { getX, getY, setX, setY } from "../main.js"; 
 
 //Player animation
+var PI = 1;
 export function animatePlayer(){
-    $('#grid'+posX+posY).prepend($('<img>',{id:'playermodel',src:`../prototype-ITLand/src/assets/player_idle/${PI}.png`, class:'cell-content'}));
+    let posX = getX();
+    let posY = getY();
+    $('#grid'+posX+posY).prepend($('<img>',{id:'playermodel',src:`./src/assets/player_idle/${PI}.png`, class:'cell-content'}));
     console.log("animated");
     PI++;
     if(PI>6) PI = 1;
@@ -15,10 +23,14 @@ export function animateEnemy(){
 
 //Redraw grid after battle animation
 export function redraw(x,y){
+    let posX = getX();
+    let posY = getY();
+    console.log(posX);
+    console.log(posY);
     var gridContainer = document.getElementById("grid-container");
     if(Grid.length===0){
       for (var row = 0; row < 26; row++) {
-        temp = [];
+        var temp = [];
         for (var col = 0; col < 64; col++) {
           var cell = document.createElement("div");
           cell.className = "cell";
@@ -62,7 +74,6 @@ export function redraw(x,y){
     console.log(timer);
     timer++;
     animatePlayer();
-    console.log(JSON.stringify(Grid))  
 }
 
 //enemy encounter function
